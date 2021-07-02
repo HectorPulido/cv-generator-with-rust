@@ -7,7 +7,7 @@ This is a template based cv generator made with rust, comrak, wkhtmltopdf. It co
 
 ## TO DO
 - ~~Expose as Rest API~~
-- More than 1 pdf output
+- ~~More than 1 pdf output~~
 - Graphic interface
 
 ## How to run 
