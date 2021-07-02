@@ -10,12 +10,12 @@ This is a template based cv generator made with rust, comrak, wkhtmltopdf. It co
 - ~~Expose as Rest API~~
 - ~~More than 1 pdf output~~
 - Graphic interface
-- More modules
+- More Nodes
 
 ## How to run 
 Configure in the .env file the port and the host
 1. docker build -t web:latest .
-2. docker run -d --name cv-gen -e "PORT=8765" -e "DEBUG=0" -p 8081:8765 web:latest
+2. docker run -d --name cv-gen -e "PORT=8765" -p 8081:8765 web:latest
 
 ## Example
 http://localhost:8081/generate_cv
