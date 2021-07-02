@@ -3,7 +3,8 @@ This is a template based cv generator made with rust, comrak, wkhtmltopdf. It co
 
 ## Features
 - Nodes: intro, description, rightImage, techStack, space, extra (html), social
-- json convertion to pdf
+- Rest API to generate CV
+- JSON to pdf
 
 ## TO DO
 - ~~Expose as Rest API~~
