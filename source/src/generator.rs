@@ -1,7 +1,7 @@
 use comrak::{markdown_to_html, ComrakExtensionOptions, ComrakOptions};
 use serde_json::Value;
-use std::fs::File;
-use wkhtmltopdf::*;
+use std::io::Write;
+use std::process::{Command, Stdio};
 
 pub struct Generator {
     title: String,
@@ -194,32 +194,21 @@ impl Generator {
         return template.replace("{{{}}}", &html);
     }
 
-    pub fn generate_pdf(html: String) -> String {
-        let pdf_app = PdfApplication::new().expect("Failed to init PDF application");
-        let mut settings = pdf_app.builder();
-        settings
-            .orientation(Orientation::Portrait)
-            .margin(Size::Millimeters(12))
-            .title("CV");
-        unsafe {
-            // Enables warning for JavaScript errors that may occur
-            settings.object_setting("load.debugJavascript", "true");
-        }
-        let gs = settings
-            .global_settings()
-            .expect("failed to create global settings");
-        let os = settings
-            .object_settings()
-            .expect("failed to create object settings");
-        let mut c = gs.create_converter();
-        c.set_warning_callback(Some(Box::new(|warn| {
-            println!("warning: {}", warn);
-        })));
-        c.add_html_object(os, &html);
-
-        let mut pdfout = c.convert().expect("failed to convert");
-        let mut file = File::create("basic.pdf").expect("failed to create basic.pdf");
-        let bytes = std::io::copy(&mut pdfout, &mut file).expect("failed to write to basic.pdf");
-        return format!("wrote {} bytes to file: basic.pdf", bytes);
+    pub fn generate_pdf(html: String, filename: &String) -> String {
+        let mut child = Command::new("wkhtmltopdf")
+            .arg("-")
+            .arg(filename)
+            .stdin(Stdio::piped())
+            .stdout(Stdio::piped())
+            .spawn()
+            .expect("Failed to spawn child process");
+        let mut stdin = child.stdin.take().expect("Failed to open stdin");
+        std::thread::spawn(move || {
+            stdin
+                .write_all(html.as_bytes())
+                .expect("Failed to write to stdin");
+        });
+        let _ = child.wait_with_output().expect("Failed to read stdout");
+        return filename.to_string();
     }
 }

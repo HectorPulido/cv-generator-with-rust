@@ -4,33 +4,39 @@ use actix_web::http::ContentEncoding;
 use actix_web::{post, web, App, HttpResponse, HttpServer, Responder};
 use dotenv::dotenv;
 use generator::Generator;
+use rand::Rng;
 use std::env;
-use std::fs::File;
+use std::fs::{remove_file, File};
 use std::io::Read;
 
 #[post("/generate_cv")]
 async fn generate_cv(info: web::Json<serde_json::Value>) -> impl Responder {
+    let mut rng = rand::thread_rng();
+    let random_name = format!("cv_{}.pdf", rng.gen_range(0..99999));
+
     let mut generator = Generator::new();
     let markdown = generator.format(info.into_inner());
     let html = Generator::generate_html(markdown);
     let final_html = Generator::apply_theme(html);
-    Generator::generate_pdf(final_html);
+    Generator::generate_pdf(final_html, &random_name);
 
     // File content may come from a database as a blob data
-    let mut f = File::open("basic.pdf").unwrap();
+    let mut f = File::open(&random_name).expect("Failed to read file");
     let mut buffer = Vec::new();
 
-    // read the whole file
+    // Read the whole file
     f.read_to_end(&mut buffer).expect("File failed to read");
+
+    // Delete file
+    remove_file(&random_name).expect("Failed to delete file");
+
+    let filename = format!("attachment; filename=\"{}\"", random_name);
 
     HttpResponse::Ok()
         .encoding(ContentEncoding::Identity)
         .content_type("application/pdf")
         .header("accept-ranges", "bytes")
-        .header(
-            "content-disposition",
-            "attachment; filename=\"download-angular.pdf\"",
-        )
+        .header("content-disposition", filename)
         .body(buffer)
 }
 
