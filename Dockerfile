@@ -27,7 +27,7 @@ RUN wkhtmltopdf --version
 WORKDIR /app
 
 COPY --from=0 /app/.env /app
-COPY --from=0 /app/target/release/ /app
+COPY --from=0 /app/target/release/cv_generator /app
 
 # COPY /source/templates/ /app/templates
 # COPY /source/static/ /app/static
