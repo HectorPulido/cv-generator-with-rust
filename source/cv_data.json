@@ -1,31 +1,3 @@
-# CV Generator made with rust
-This is a template based cv generator made with rust, comrak, wkhtmltopdf. It converts a json file to a pdf version
-
-## Features
-- Nodes: intro, description, rightImage, unorderedList, space, extra (html), social, achievement, title
-- Rest API to generate CV
-- JSON to pdf
-- CLI application to generate the CV pdf
-
-## TO DO
-- ~~Expose as Rest API~~
-- ~~More than 1 pdf output~~
-- Graphic interface
-- More Nodes
-
-## How to generate the PDF without running the API
-1. Install "wkhtmltopdf"
-2. cargo run "cv_data.json"
-Where cv_data.json is the name or the path of the json file with your cv info.
-
-## How to run API
-Configure in the .env file the port and the host
-1. docker build -t web:latest .
-2. docker run -d --name cv-gen -e "PORT=8765" -p 8081:8765 web:latest
-
-## Example
-http://localhost:8081/generate_cv
-```json
 [
     {
         "type": "config",
@@ -53,7 +25,7 @@ http://localhost:8081/generate_cv
             },
             {
                 "type": "description",
-                "data": "I'm just a simple <b>Computational math</b> MSC student..."
+                "data": "I'm just a simple <b>Computational math</b> MSC student, <b>Mechatronic engineer</b>, <b>backend developer</b>, <b>#MachineLearning</b> and <b>#Gamedev</b> lover, I have delusion of youtuber and now streamer, There is no challenge big enough not to try, My code will change the world some day."
             },
 
             {
@@ -66,7 +38,8 @@ http://localhost:8081/generate_cv
                     "title": "{i fas fa-briefcase} Backend developer at Platzi",
                     "list": [
                         "B2C & B2B EdTech web software, more than 3 million students.",
-                        "..."
+                        "Microservices creation, ETLs, Abstract libraries, etc.",
+                        "Tech stack: Django/Python, Actix/Rust, also Kafka, Celery, GraphQL and elastic search."
                     ],
                     "data_range": "August 2020 - Now"
                 }
@@ -74,9 +47,44 @@ http://localhost:8081/generate_cv
             {
                 "type": "achievement",
                 "data": {
+                    "title": "{i fas fa-briefcase} Senior Software Engineer at Finsocial",
+                    "list": [
+                        "Fast iteration in Fintech web software, more than 300.000 users.",
+                        "Team management, recluitment and Growth.",
+                        "Tech stack: PHP, MYSQL, Django/Python, Pytorch data stack.",
+                        "Leader of the migration to django microservices.",
+                        "Mixed role between Backend and Data scientist, from Junior to Senior in 1 Year."
+                    ],
+                    "data_range": "August 2020 - Now"
+                }
+            },
+            {
+                "type": "achievement",
+                "data": {
+                    "title": "{i fas fa-briefcase} Freelance software developer",
+                    "list": [
+                        "Web, videogames, Machine learning, Android development, etc.",
+                        "Software development with C# / MYSQL / PYTHON / AWS / Unity."
+                    ],
+                    "data_range": "January 2017 - February 2019"
+                }
+            },
+            {
+                "type": "achievement",
+                "data": {
+                    "title": "{i fas fa-paint-brush} 14.000+ Youtube Subscribers",
+                    "list": [
+                        "AI, Gamedev, Software development an other topics."
+                    ],
+                    "data_range": "January 2018 - Now"
+                }
+            },
+            {
+                "type": "achievement",
+                "data": {
                     "title": "{i fas fa-graduation-cap} Mechatronic Engineering, Universidad Autónoma Del Caribe, Barranquilla Colombia",
                     "list": [
-                        "Honorable mention: ..."
+                        "Honorable mention: Classification of data obtained through multisensorial devices for use in flexible Machine Learning platform with the ability to diagnose diseases."
                     ],
                     "data_range": "June 2015 - September 2019"
                 }
@@ -90,11 +98,14 @@ http://localhost:8081/generate_cv
                 "data": {
                     "title": "{i fas fa-robot} Evolutionary Neural Networks (C#, Unity)",
                     "list": [
-                        "This is a <b>machine learning</b> ...."
+                        "This is a <b>machine learning</b> project made in Unity3d and C#, using <b>neural networks and genetic algorithms</b> to create autonomous intelligences in video games."
                     ],
                     "url": "https://github.com/HectorPulido/Evolutionary-Neural-Networks-on-unity-for-bots"
                 }
-            }            
+            }
+
+
+            
         ]
     },
     {
@@ -108,7 +119,7 @@ http://localhost:8081/generate_cv
                     "title": "{i fas fa-book} Contact",
                     "list": [
                         "{i fas fa-phone} +57 999999999",
-                        "<a href='mailto:aaaaaaa@gmail.com'>{i fas fa-envelope} aaaaaaa@gmail.com</a>",
+                        "<a href='mailto:aaaaaaaaa@gmail.com'>{i fas fa-envelope} aaaaaaaaa@gmail.com</a>",
                         "<a href='https://github.com/HectorPulido'>{i fab fa-github} Github (HectorPulido)</a>",
                         "<a href='https://www.youtube.com/channel/UCS_iMeH0P0nsIDPvBaJckOw'>{i  fab fa-youtube} Youtube (Hector Pulido)</a>",
                         "<a href='https://twitter.com/Hector_Pulido_'>{i fab fa-twitter} Twitter (@Hector_Pulido_)</a>"
@@ -121,7 +132,13 @@ http://localhost:8081/generate_cv
                     "title": "{i fas fa-magic} Tech Stack",
                     "list": [
                         "Backend with Python; Django stack",
-                        "....",
+                        "Backend with Rust; Actix stack",
+                        "SQL with Postgresql, NoSQL with Mongo",
+                        "Linux, AWS and Docker",
+                        "Regex fan (unstructured data)",
+                        "Applied mathematics",
+                        "ML/DS with Python:",
+                        "Pandas, Numpy, Matplotlib, Pytorch",
                         "Unity3d"
                     ]
                 }
@@ -142,29 +159,18 @@ http://localhost:8081/generate_cv
                     "title": "{i fas fa-fire} Soft Skill",
                     "list": [
                         "I like to learn about complex topics.",
-                        "...",
+                        "I can learn about new technologies and techniques very quickly.",
                         "I can speak in public and transmit ideas easily.",
+                        "I love to teach and mentor what I know.",
+                        "I have a tendency to lead.",
+                        "I have a strong personal brand."
                     ]
                 }
             }
         ]
-    } 
+    }
+
+
+
+    
 ]
-```
-
-![Example](/img/img.png) <br/>
-
-<div align="center">
-<h3 align="center">Let's connect 😋</h3>
-</div>
-<p align="center">
-<a href="https://www.linkedin.com/in/hector-pulido-17547369/" target="blank">
-<img align="center" width="30px" alt="Hector's LinkedIn" src="https://www.vectorlogo.zone/logos/linkedin/linkedin-icon.svg"/></a> &nbsp; &nbsp;
-<a href="https://twitter.com/Hector_Pulido_" target="blank">
-<img align="center" width="30px" alt="Hector's Twitter" src="https://www.vectorlogo.zone/logos/twitter/twitter-official.svg"/></a> &nbsp; &nbsp;
-<a href="https://www.twitch.tv/hector_pulido_" target="blank">
-<img align="center" width="30px" alt="Hector's Twitch" src="https://www.vectorlogo.zone/logos/twitch/twitch-icon.svg"/></a> &nbsp; &nbsp;
-<a href="https://www.youtube.com/channel/UCS_iMeH0P0nsIDPvBaJckOw" target="blank">
-<img align="center" width="30px" alt="Hector's Youtube" src="https://www.vectorlogo.zone/logos/youtube/youtube-icon.svg"/></a> &nbsp; &nbsp;
-
-</p>
